@@ -45,7 +45,7 @@ def save_uploaded_file(uploaded_file):
 
 # Define the Streamlit app
 def main():
-    st.title("DocuBOT Admin")
+    st.title("LawBOT Document Management Portal")
 
 
     # Create a file uploader widget
