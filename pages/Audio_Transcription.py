@@ -1,7 +1,7 @@
 import streamlit as st
 from pathlib import Path
 import llama_index
-from llama_index import download_loader
+from llama_index import download_loader, GPTSimpleVectorIndex, Document
 import os
 AudioTranscriber = download_loader("AudioTranscriber")
 import sys
@@ -46,13 +46,35 @@ if len(audio_files) > 0:
     st.write(pat.name)
     # Transcribe audio file
     documents = loader.load_data(file=pat)
-    transcripts = loader.transcribe(documents)
-    st.write("Transcripts:")
-    for transcript in transcripts:
-        st.write(transcript)
-
+    index = GPTSimpleVectorIndex.from_documents(documents)
+    index_file_path = audio_dir / f"{selected_file}.json"
+        
+        # Save the index to the data directory with the same name as the PDF
+    index.save_to_disk(index_file_path)
+    st.success("Index created successfully!")
 else:
     st.warning("No audio files found. Please upload.")
 
+try:
+    index_files = [file.name for file in audio_dir.glob(f"{selected_file}.json")]
+    len(index_files) > 0:
+    st.write("Available index files:")
+    selected_index_file = st.selectbox("", index_files)
+    index_file_path = audio_dir / selected_index_file
+    st.write(f"Index file path: {index_file_path}")
+    index = GPTSimpleVectorIndex.load_from_disk(index_file_path)
+    st.success("index loaded")
+except NameError:
+    st.warning("No index files found for this audio file. Please transcribe the audio file first.")
+
+inp = st.text_input("ask question")
+ask = st.button("submit")
+if ask:
+    res = index.query(inp)
+    st.write(res)
+
 # Show path of "audio" directory
 st.write(f"Audio directory path: {audio_dir}")
+
+
+
