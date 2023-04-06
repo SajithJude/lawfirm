@@ -1,5 +1,6 @@
 import streamlit as st
 from pathlib import Path
+import llama_index
 from llama_index import download_loader
 import os
 AudioTranscriber = download_loader("AudioTranscriber")
