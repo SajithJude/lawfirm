@@ -1,14 +1,15 @@
+import os
 import streamlit as st
 from pathlib import Path
 from llama_index import download_loader
-import os
-
 AudioTranscriber = download_loader("AudioTranscriber")
 
-
-
+# Create directory if it doesn't exist
 if not os.path.exists("audio"):
     os.makedirs("audio")
+
+# Get absolute path of "audio" directory
+audio_dir = os.path.abspath("audio")
 
 # Streamlit app code
 st.title("Audio Uploader")
@@ -30,11 +31,14 @@ if len(audio_files) > 0:
     st.write("Available audio files:")
     selected_file = st.selectbox("", audio_files)
     file_path = os.path.join("audio", selected_file)
-    st.write(file_path)
+    st.write(f"File path: {file_path}")
     loader = AudioTranscriber()
     audio = st.audio(file_path)
 
-    documents = loader.load_data(file=Path("/{file_path}"))
+    documents = loader.load_data(file=Path("{audio_dir}/{selected_file}"))
 
 else:
-    st.warning("No audio files found Please upload.")
+    st.warning("No audio files found. Please upload.")
+
+# Show path of "audio" directory
+st.write(f"Audio directory path: {audio_dir}")
