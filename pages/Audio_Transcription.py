@@ -5,10 +5,8 @@ AudioTranscriber = download_loader("AudioTranscriber")
 
 import subprocess
 # Install ffmpeg if not already installed
-try:
-    subprocess.run(["ffmpeg", "-version"], capture_output=True, check=True)
-except subprocess.CalledProcessError:
-    subprocess.run(["sudo", "apt-get", "install", "-y", "ffmpeg"])
+
+subprocess.run(["sudo", "apt-get", "install", "-y", "ffmpeg"])
 
 # Add ffmpeg to PATH
 os.environ["PATH"] += os.pathsep + os.path.dirname(os.popen("which ffmpeg").read().strip())
