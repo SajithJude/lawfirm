@@ -34,7 +34,7 @@ if len(audio_files) > 0:
     loader = AudioTranscriber()
     audio = st.audio(file_path)
 
-    documents = loader.load_data(file=Path("{file_path}"))
+    documents = loader.load_data(file=Path("/{file_path}"))
 
 else:
     st.warning("No audio files found Please upload.")
