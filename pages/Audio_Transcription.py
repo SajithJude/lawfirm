@@ -31,8 +31,9 @@ if len(audio_files) > 0:
     selected_file = st.selectbox("", audio_files)
     file_path = os.path.join("audio", selected_file)
     loader = AudioTranscriber()
-    documents = loader.load_data(file=file_path)
+    audio = st.audio(file_path)
 
-    st.audio(file_path)
+    documents = loader.load_data(audio)
+
 else:
     st.warning("No audio files found Please upload.")
