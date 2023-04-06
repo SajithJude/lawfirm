@@ -25,6 +25,10 @@ dependencies:
   - xz=5.2.10=h5eee18b_1
   - zlib=1.2.13=h5eee18b_0
   - pip:
+    - llama-index
+    - langchain
+    - PyPDF2
+    - streamlit-chat
     - altair==4.2.2
     - attrs==22.2.0
     - blinker==1.5
