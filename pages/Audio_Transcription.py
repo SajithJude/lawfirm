@@ -3,7 +3,7 @@ from pathlib import Path
 from llama_index import download_loader
 import os
 
-AudioTranscriber = download_loader("AudioTranscriber")
+AudioTranscriber = download_loader("Audio Upload")
 
 
 
@@ -31,7 +31,7 @@ if len(audio_files) > 0:
     selected_file = st.selectbox("", audio_files)
     file_path = os.path.join("audio", selected_file)
     loader = AudioTranscriber()
-    documents = loader.load_data(file=Path(file_path))
+    documents = loader.load_data(file=Path("audio/{selected_file}"))
 
     st.audio(file_path)
 else:
