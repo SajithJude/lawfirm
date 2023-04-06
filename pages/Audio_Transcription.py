@@ -3,7 +3,7 @@ from pathlib import Path
 from llama_index import download_loader
 import os
 
-AudioTranscriber = download_loader("Audio Upload")
+AudioTranscriber = download_loader("AudioTranscriber")
 
 
 
