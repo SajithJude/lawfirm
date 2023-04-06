@@ -3,6 +3,16 @@ from pathlib import Path
 from llama_index import download_loader
 AudioTranscriber = download_loader("AudioTranscriber")
 
+
+# Install ffmpeg if not already installed
+try:
+    subprocess.run(["ffmpeg", "-version"], capture_output=True, check=True)
+except subprocess.CalledProcessError:
+    subprocess.run(["sudo", "apt-get", "install", "-y", "ffmpeg"])
+
+# Add ffmpeg to PATH
+os.environ["PATH"] += os.pathsep + os.path.dirname(os.popen("which ffmpeg").read().strip())
+
 # Create directory if it doesn't exist
 audio_dir = Path("audio")
 audio_dir.mkdir(exist_ok=True)
