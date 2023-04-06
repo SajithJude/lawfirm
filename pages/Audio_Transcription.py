@@ -5,8 +5,6 @@ import os
 
 AudioTranscriber = download_loader("AudioTranscriber")
 
-loader = AudioTranscriber()
-documents = loader.load_data(file=Path('./podcast.mp3'))
 
 
 if not os.path.exists("audio"):
@@ -32,6 +30,9 @@ if len(audio_files) > 0:
     st.write("Available audio files:")
     selected_file = st.selectbox("", audio_files)
     file_path = os.path.join("audio", selected_file)
+    loader = AudioTranscriber()
+    documents = loader.load_data(file=Path(file_path))
+
     st.audio(file_path)
 else:
     st.warning("No audio files found Please upload.")
