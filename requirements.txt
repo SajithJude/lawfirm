@@ -1,2 +1,8 @@
 streamlit
-openai-whisper==20230124
+openai
+llama-index
+langchain
+PyPDF2
+streamlit-chat
+openai-whisper
+ffmpeg-python
