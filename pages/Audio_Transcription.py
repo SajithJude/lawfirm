@@ -34,11 +34,11 @@ if len(audio_files) > 0:
     st.write(f"File path: {file_path}")
     loader = AudioTranscriber()
     audio = st.audio(file_path)
-
+    st.write(f"Audio directory path: {audio_dir}")
     documents = loader.load_data(file=Path("{audio_dir}/{selected_file}"))
 
 else:
     st.warning("No audio files found. Please upload.")
 
 # Show path of "audio" directory
-st.write(f"Audio directory path: {audio_dir}")
+
