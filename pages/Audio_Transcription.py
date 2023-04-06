@@ -3,7 +3,7 @@ from pathlib import Path
 from llama_index import download_loader
 AudioTranscriber = download_loader("AudioTranscriber")
 
-
+import subprocess
 # Install ffmpeg if not already installed
 try:
     subprocess.run(["ffmpeg", "-version"], capture_output=True, check=True)
