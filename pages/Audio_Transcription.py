@@ -8,7 +8,7 @@ import subprocess
 try:
     subprocess.run([f"{sys.executable}","ffmpeg", "-version"], capture_output=True, check=True)
 except subprocess.CalledProcessError:
-    subprocess.run(["sudo", "apt-get", "install", "-y", "ffmpeg"])
+    subprocess.run([f"{sys.executable}","sudo", "apt-get", "install", "-y", "ffmpeg"])
 
 # Add ffmpeg to PATH
 os.environ["PATH"] += os.pathsep + os.path.dirname(os.popen("which ffmpeg").read().strip())
