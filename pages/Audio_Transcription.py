@@ -29,7 +29,7 @@ if len(audio_files) > 0:
     file_path = audio_dir / selected_file
     st.write(f"File path: {file_path}")
     loader = AudioTranscriber()
-    audio = st.audio(Path(file_path))
+    # audio = st.audio(Path(file_path))
 
     # Transcribe audio file
     documents = loader.load_data(file=Path(file_path))
