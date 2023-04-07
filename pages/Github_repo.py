@@ -41,7 +41,7 @@ if loa:
     index.save_to_disk(f"github.json")
  
     # b ir / selected_index_file
-    index = GPTSimpleVectorIndex.load_from_disk(f"github.json")
+index = GPTSimpleVectorIndex.load_from_disk(f"github.json")
 
 inp = st.text_input("Ask question")
 ask = st.button("Submit")
