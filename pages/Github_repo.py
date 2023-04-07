@@ -3,7 +3,8 @@ import streamlit as st
 from llama_index import download_loader
 # from llama_index.readers.llamahub_modules.github_repo import GithubRepositoryReader, GithubClient
 from llama_index.readers.llamahub_modules.github_repo import GithubRepositoryReader, GithubClient
-from llama_index import  GPTSimpleVectorIndex , Document
+from llama_index import  GPTSimpleVectorIndex , Document , LLMPredictor, ServiceContext
+
 
 
 
@@ -39,9 +40,16 @@ if loa:
     index = GPTSimpleVectorIndex.from_documents(docs_branch)
         # name = web_dir / url_input
     index.save_to_disk(f"github.json")
+    st.success("Index created from repository successfully")
  
     # b ir / selected_index_file
-index = GPTSimpleVectorIndex.load_from_disk(f"github.json")
+# index = GPTSimpleVectorIndex.load_from_disk(/)
+llm_predictor = LLMPredictor(llm=OpenAI(temperature=0, model_name="text-davinci-003", max_tokens=1024))
+service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
+
+index = GPTSimpleVectorIndex.load_from_disk(f"github.json",service_context=service_context)
+if index:
+    st.success("Index Loaded from repository successfully")
 
 inp = st.text_input("Ask question")
 ask = st.button("Submit")
