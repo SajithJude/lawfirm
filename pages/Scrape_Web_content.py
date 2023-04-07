@@ -30,15 +30,15 @@ with st.expander("Input URL"):
         index.save_to_disk(f"url.json")
  
     # b ir / selected_index_file
-        # index = GPTSimpleVectorIndex.load_from_disk(index_file_path)
+        index = GPTSimpleVectorIndex.load_from_disk(f"url.json")
 
     # except NameError:
     #     st.warning("No index files found, Input a URL above and Scrape content to index the website.")
 
-        inp = st.text_input("Ask question")
-        ask = st.button("Submit")
+inp = st.text_input("Ask question")
+ask = st.button("Submit")
 
-        if ask:
-            res = index.query(inp)
-            st.write(res)
-            pass
+if ask:
+    res = index.query(inp)
+    st.write(res)
+    pass
