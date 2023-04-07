@@ -74,7 +74,7 @@ if ask:
     st.write(res)
 
 # Show path of "audio" directory
-st.write(f"Audio directory path: {audio_dir}")
+# st.write(f"Audio directory path: {audio_dir}")
 
 
 
