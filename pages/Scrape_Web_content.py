@@ -35,10 +35,10 @@ with st.expander("Input URL"):
     # except NameError:
     #     st.warning("No index files found, Input a URL above and Scrape content to index the website.")
 
-inp = st.text_input("Ask question")
-ask = st.button("Submit")
+        inp = st.text_input("Ask question")
+        ask = st.button("Submit")
 
-if ask:
-    res = index.query(inp)
-    st.write(res)
-    pass
+        if ask:
+            res = index.query(inp)
+            st.write(res)
+            pass
