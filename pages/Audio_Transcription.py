@@ -31,19 +31,21 @@ with st.expander("Upload Audio"):
     if len(audio_files) > 0:
         st.write("Available audio files:")
         selected_file = st.selectbox("", audio_files)
-        file_path = audio_dir / selected_file
-        st.write(f"File path: {file_path}")
-        loader = AudioTranscriber()
-        audio = st.audio(f"{file_path}")
-        pat = Path(f"{str(file_path)}")
-        # st.write(pat.name)
-        # Transcribe audio file
-        documents = loader.load_data(file=pat)
-        index = GPTSimpleVectorIndex.from_documents(documents)
-        index_file_path = audio_dir / f"{selected_file}.json"
-            
-            # Save the index to the data directory with the same name as the PDF
-        index.save_to_disk(index_file_path)
+        create = st.button("Create index")
+        if create:
+            file_path = audio_dir / selected_file
+            st.write(f"File path: {file_path}")
+            loader = AudioTranscriber()
+            audio = st.audio(f"{file_path}")
+            pat = Path(f"{str(file_path)}")
+            # st.write(pat.name)
+            # Transcribe audio file
+            documents = loader.load_data(file=pat)
+            index = GPTSimpleVectorIndex.from_documents(documents)
+            index_file_path = audio_dir / f"{selected_file}.json"
+                
+                # Save the index to the data directory with the same name as the PDF
+            index.save_to_disk(index_file_path)
         st.success(f"{selected_file} 's Index created successfully!")
     else:
         st.warning("No audio files found. Please upload.")
