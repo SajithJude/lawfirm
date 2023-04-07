@@ -15,6 +15,7 @@ web_dir.mkdir(exist_ok=True)
 st.title("Chat with Knowledge from Scraped Web Content")
 
 with st.expander("Input URL"):
+
 # Input field for the URL to be loaded in the data
     url_input = st.text_input("Enter the URL to be scraped")
     scrape_url = st.button("Scrape URL")
@@ -26,11 +27,11 @@ with st.expander("Input URL"):
 
     # documents = loader.load_data(file=pat)
     index = GPTSimpleVectorIndex.from_documents(documents)
-    index_file_path = web_dir / f"{selected_file}.json"
+    # index_file_path = web_dir / f"{selected_file}.json"
         
     # Save the index to the data directory with the same name as the PDF
     index.save_to_disk(index_file_path)
-    st.success(f"{selected_file} 's Index created successfully!")
+    # st.success(f"{selected_file} 's Index created successfully!")
     # else:
     #     st.warning("No audio files found. Please upload.")
 
