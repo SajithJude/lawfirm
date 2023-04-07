@@ -2,6 +2,7 @@ import os
 import streamlit as st
 from llama_index import download_loader
 # from llama_index.readers.llamahub_modules.github_repo import GithubRepositoryReader, GithubClient
+from llama_index.readers.llamahub_modules.github_repo import GithubRepositoryReader, GithubClient
 
 download_loader("GithubRepositoryReader")
 
