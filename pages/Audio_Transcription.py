@@ -25,12 +25,12 @@ if audio_file is not None:
         f.write(audio_file.getbuffer())
     st.success(f"File saved to: {file_path}")
 
-# Show list of available audio files
-audio_files = [file.name for file in audio_dir.glob("*")]
-if len(audio_files) > 0:
-    st.write("Available audio files:")
-    selected_file = st.selectbox("", audio_files)
-    file_path = audio_dir / selected_file
+# # Show list of available audio files
+# audio_files = [file.name for file in audio_dir.glob("*")]
+# if len(audio_files) > 0:
+#     st.write("Available audio files:")
+#     selected_file = st.selectbox("", audio_files)
+#     file_path = audio_dir / selected_file
     st.write(f"File path: {file_path}")
     loader = AudioTranscriber()
     audio = st.audio(f"{file_path}")
@@ -50,8 +50,8 @@ else:
 try:
     index_files = [file.name for file in audio_dir.glob(f"{selected_file}.json")]
     # len(index_files) > 0:
-    st.write("Select indexed Audio To Query:")
-    selected_index_file = st.selectbox("", index_files)
+    # st.write("Select an indexed Audio To ask questions:")
+    selected_index_file = st.selectbox("Select ", index_files)
     index_file_path = audio_dir / selected_index_file
     # st.write(f"Index file path: {index_file_path}")
     index = GPTSimpleVectorIndex.load_from_disk(index_file_path)
