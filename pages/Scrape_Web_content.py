@@ -30,7 +30,7 @@ with st.expander("Input URL"):
         index.save_to_disk(f"{name}.json")
  
 try:
-    index_files = [file.name for file in web_dir.glob(f"{selected_file}.json")]
+    index_files = [file.name for file in web_dir.glob(f"{name}.json")]
     selected_index_file = st.selectbox("Select a Scraped Website Index to ask questions ", index_files)
     index_file_path = web_dir / selected_index_file
     index = GPTSimpleVectorIndex.load_from_disk(index_file_path)
