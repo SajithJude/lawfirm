@@ -25,8 +25,8 @@ with st.expander("Input URL"):
         documents = loader.load_data(urls=[url_input])
         st.success(f"URL content scraped successfully!")
 
-    index = GPTSimpleVectorIndex.from_documents(documents)
-    index.save_to_disk(index_file_path)
+        index = GPTSimpleVectorIndex.from_documents(documents)
+        index.save_to_disk(index_file_path)
  
 try:
     index_files = [file.name for file in web_dir.glob(f"{selected_file}.json")]
