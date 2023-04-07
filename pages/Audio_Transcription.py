@@ -57,7 +57,7 @@ else:
 
 try:
     index_files = [file.name for file in audio_dir.glob(f"{selected_file}.json")]
-    len(index_files) > 0:
+    # len(index_files) > 0:
     st.write("Available index files:")
     selected_index_file = st.selectbox("", index_files)
     index_file_path = audio_dir / selected_index_file
