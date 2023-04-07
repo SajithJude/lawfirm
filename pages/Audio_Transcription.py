@@ -12,7 +12,7 @@ audio_dir = Path("audio")
 audio_dir.mkdir(exist_ok=True)
 
 # Streamlit app code
-st.title("Audio Uploader")
+st.title("Query Audio Files")
 
 with st.expander("Upload Audio"):
     # Allow user to upload audio file
@@ -52,7 +52,7 @@ try:
     index_files = [file.name for file in audio_dir.glob(f"{selected_file}.json")]
     # len(index_files) > 0:
     # st.write("Select an indexed Audio To ask questions:")
-    selected_index_file = st.selectbox("Select ", index_files)
+    selected_index_file = st.selectbox("Select An Audio Index to ask questions ", index_files)
     index_file_path = audio_dir / selected_index_file
     # st.write(f"Index file path: {index_file_path}")
     index = GPTSimpleVectorIndex.load_from_disk(index_file_path)
