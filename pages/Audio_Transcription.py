@@ -43,7 +43,7 @@ if len(audio_files) > 0:
     loader = AudioTranscriber()
     audio = st.audio(f"{file_path}")
     pat = Path(f"{str(file_path)}")
-    st.write(pat.name)
+    # st.write(pat.name)
     # Transcribe audio file
     documents = loader.load_data(file=pat)
     index = GPTSimpleVectorIndex.from_documents(documents)
@@ -51,19 +51,19 @@ if len(audio_files) > 0:
         
         # Save the index to the data directory with the same name as the PDF
     index.save_to_disk(index_file_path)
-    st.success("Index created successfully!")
+    st.success(f"{selected_file} 's Index created successfully!")
 else:
     st.warning("No audio files found. Please upload.")
 
 try:
     index_files = [file.name for file in audio_dir.glob(f"{selected_file}.json")]
     # len(index_files) > 0:
-    st.write("Available index files:")
+    st.write("Select indexed Audio To Query:")
     selected_index_file = st.selectbox("", index_files)
     index_file_path = audio_dir / selected_index_file
-    st.write(f"Index file path: {index_file_path}")
+    # st.write(f"Index file path: {index_file_path}")
     index = GPTSimpleVectorIndex.load_from_disk(index_file_path)
-    st.success("index loaded")
+    # st.success("index loaded")
 except NameError:
     st.warning("No index files found for this audio file. Please transcribe the audio file first.")
 
