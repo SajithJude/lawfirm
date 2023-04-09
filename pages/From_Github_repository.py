@@ -99,7 +99,7 @@ index = GPTSimpleVectorIndex.load_from_disk(f"github.json", service_context=serv
 if index:
     st.success("Index Loaded from repository successfully")
 
-with col2.expander("Details about repo"):
+with col2.expander("FAQ Questions and responses"):
     about = index.query("What does this application do")
     tech = index.query("What are the technologies and libraries used in this repo")
     st.markdown("### What does this application do?")
@@ -107,7 +107,7 @@ with col2.expander("Details about repo"):
     st.markdown("### What are the technologies and libraries used in this repo ?")
     st.write(tech.response)
    
-with col1.expander("Details about repo"):
+with col1.expander("Ask your own Questions"):
     # Query the index with user input
     inp = st.text_input("Ask question")
     ask = st.button("Submit")
