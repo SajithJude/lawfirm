@@ -11,8 +11,8 @@ from llama_index.readers.llamahub_modules.github_repo import GithubRepositoryRea
 
 
 # Define Streamlit input components for repository selection and custom URL input
-repository_selection = st.radio("How do you wanna start", ["Select on of my existing Repositories", "Custom URL"])
-if repository_selection == "Custom URL":
+repository_selection = st.radio("How do you wanna start", ["Select on of my existing Repositories", "Custom Repository URL"])
+if repository_selection == "Custom Repository URL":
     repo_url = st.text_input("Enter the URL of the GitHub repository")
 else:
     repolist = ['https://github.com/SajithJude/ideagen',
@@ -46,7 +46,7 @@ else:
             'https://github.com/SajithJude/vehiclediagnostics',
             'https://github.com/SajithJude/GAN_environment']
 
-    repo_url = st.selectbox("Select a repository", repolist)
+    repo_url = st.selectbox("Select one my existing repositories", repolist)
 
 # Extract owner and repository name from the URL or set to None if not provided
 if repo_url:
