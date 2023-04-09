@@ -73,7 +73,7 @@ branch = st.selectbox("Select branch",['master','main'])
 # concurrent_requests = st.slider("Select number of concurrent requests", min_value=1, max_value=20, value=10)
 
 # Create index from selected repository
-loa = st.button("Create index")
+loa = st.button("Fetch Repo")
 if loa and owner and repo:
     # Load data from the GitHub repository using the selected input parameters
     github_client = GithubClient(os.getenv("GITHUB_TOKEN"))
