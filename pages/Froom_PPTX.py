@@ -4,7 +4,7 @@ import llama_index
 from llama_index import download_loader, GPTSimpleVectorIndex, Document
 import os
 
-AudioTranscriber = download_loader("AudioTranscriber")
+# AudioTranscriber = download_loader("AudioTranscriber")
 
 # Replace the web scraper with PPTX upload functionality
 PptxReader = download_loader("PptxReader")
