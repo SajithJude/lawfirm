@@ -1,71 +1,15 @@
 import streamlit as st
-from llama_index import GPTSimpleVectorIndex, Document, SimpleDirectoryReader, QuestionAnswerPrompt
-import os
-import openai 
-from streamlit_chat import message as st_message
 
+st.title('OpenAI-powered Chatbot Demo Apps')
 
-# favicon = "favicon.ac8d93a.69085235180674d80d902fdc4b848d0b (1).png"
-st.set_page_config(page_title="LawBOT Virtual Assistant", page_icon=None)
+st.write('Welcome to my portfolio of demo apps for building OpenAI-powered chatbots that are connected to custom data sources! With my apps, you can easily create chatbots that can handle a variety of different data sources, including uploaded PDF documents, uploaded PPTX files, audio files, and even scraped data from the internet.')
 
+st.write('My apps use the power of OpenAI to create chatbots that are able to understand natural language and respond to users in a conversational manner. This means that users can ask questions and get answers from the chatbot just as they would from a human expert.')
 
-openai.api_key = os.getenv("API_KEY")
+st.write('One of the key features of my apps is their ability to connect to custom data sources. This means that you can upload your own PDFs, PPTX files, or audio files and have the chatbot use that data to answer user questions. For example, if you have a PDF document containing information about your company\'s products or services, the chatbot can use that information to answer questions from potential customers.')
 
-if "history" not in st.session_state:
-    st.session_state.history = []
+st.write('In addition to connecting to custom data sources, my apps can also scrape data from the internet. This means that you can create chatbots that can answer questions about a wide range of topics, even if you don\'t have all the information in-house.')
 
-def new_chat():
-    """
-    Clears session state and starts a new chat.
-    """
-    st.session_state.history = []
+st.write('My portfolio of demo apps includes a range of different examples, from simple chatbots that can answer basic questions to more complex chatbots that can handle more advanced queries. Each app is designed to be easy to use and customize, so you can quickly create a chatbot that meets your needs.')
 
-
-DATA_DIR = "data"
-# Get a list of available index files in the data directory
-index_filenames = [f for f in os.listdir(DATA_DIR) if f.endswith(".json")]
-
-
-if index_filenames:
-    # If there are index files available, create a dropdown to select the index file to load
-    index_file = st.selectbox("Select an index file to load:", index_filenames)
-    index_path = os.path.join(DATA_DIR, index_file)
-    index = GPTSimpleVectorIndex.load_from_disk(index_path)
-else:
-    # If there are no index files available, prompt the user to upload a PDF file
-    st.warning("No index files found. Please upload a PDF file to create an index.")
-    
-
-def generate_answer():
-    user_message = st.session_state.input_text
-    query_str = str(user_message)
-    message_bot = index.query(query_str, response_mode="compact", mode="embedding")
-    st.session_state.history.append({"message": user_message, "is_user": True})
-    st.session_state.history.append({"message": str(message_bot), "is_user": False})
-    st.session_state.input_text = ""
-    # st.session_state.history = [{"message": user_message, "is_user": True},
-    #                             {"message": str(message_bot), "is_user": False}]
-
-if st.sidebar.button("New Chat"):
-    new_chat()
-
-input_text = st.text_input("Ask LawBOT Virtual Assitant a question", key="input_text", on_change=generate_answer)
-
-if st.session_state.history:
-    chat = st.session_state.history[-1]
-    st_message(**chat)
-
-for chat in st.session_state.history:
-
-    if chat["is_user"]:
-
-        st.sidebar.caption("Question: " + chat["message"])
-    else:
-        with st.sidebar.expander("Bot Answer", expanded=False):
-            st.write(chat["message"], language=None)
-
-def st_message(message, is_user):
-    if is_user:
-        st.write("You: " + message)
-    else:
-        st.write("LawBOT: " + message)
+st.write('If you\'re looking to create a chatbot that can handle a variety of different data sources and respond to users in a conversational manner, my portfolio of demo apps is the perfect place to start. With my apps, you can quickly and easily create powerful chatbots that will help you engage with your customers and provide them with the information they need. So why wait? Start exploring my portfolio of demo apps today and see what you can create!')
