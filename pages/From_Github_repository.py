@@ -88,9 +88,7 @@ if loa and owner and repo:
     index.save_to_disk(f"github.json")
     st.success("Index created from repository successfully")
 
-    about = index.query("What does this application do")
-    tech = index.query("What are the technologies and libraries used in this repo")
-col1, col2 = st.columns(2)
+
 
 # Load index from saved file
 llm_predictor = LLMPredictor(llm=OpenAI(temperature=0, model_name="text-davinci-003", max_tokens=1024))
@@ -101,16 +99,17 @@ if index:
     st.success("Index Loaded from repository successfully")
 
 
+col1, col2 = st.columns(2)
 
 with col2.expander("FAQ Questions and responses",expanded=True):
-    # about = index.query("What does this application do")
-    # tech = index.query("What are the technologies and libraries used in this repo")
+    about = index.query("What does this application do")
+    tech = index.query("What are the technologies and libraries used in this repo")
     st.markdown("### What does this application do?")
     st.write(about.response)
     st.markdown("### What are the technologies and libraries used in this repo ?")
     st.write(tech.response)
    
-with col1.expander("Ask your own Questions",expanded=True):
+with col1.expander("Ask your own Questions",expanded=False):
     # Query the index with user input
     inp = st.text_input("Ask question")
     ask = st.button("Submit")
