@@ -100,7 +100,7 @@ service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
 
 index = GPTSimpleVectorIndex.load_from_disk(f"{st.session_state['repo']}.json", service_context=service_context)
 if index:
-    st.success("Index Loaded from repository successfully")
+    st.success(f"{st.session_state['repo']} Index Loaded from repository successfully")
 
 
 col1, col2 = st.columns(2)
