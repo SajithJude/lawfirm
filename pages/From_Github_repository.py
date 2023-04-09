@@ -101,7 +101,7 @@ if index:
 
 col1, col2 = st.columns(2)
 
-with col2.expander("FAQ Questions and responses"):
+with col2.expander("FAQ Questions and responses",expanded=True):
     about = index.query("What does this application do")
     tech = index.query("What are the technologies and libraries used in this repo")
     st.markdown("### What does this application do?")
@@ -109,7 +109,7 @@ with col2.expander("FAQ Questions and responses"):
     st.markdown("### What are the technologies and libraries used in this repo ?")
     st.write(tech.response)
    
-with col1.expander("Ask your own Questions"):
+with col1.expander("Ask your own Questions",expanded=True):
     # Query the index with user input
     inp = st.text_input("Ask question")
     ask = st.button("Submit")
