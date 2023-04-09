@@ -25,14 +25,15 @@ with st.expander("Input URL"):
         loader = BeautifulSoupWebReader()
         documents = loader.load_data(urls=[url_input])
         st.success(f"URL content scraped successfully!")
+        llm_predictor = LLMPredictor(llm=OpenAI(temperature=0, model_name="text-davinci-003", max_tokens=1024))
+        service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
 
-        index = GPTSimpleVectorIndex.from_documents(documents)
+
+        index = GPTSimpleVectorIndex.from_documents(documents, service_context=service_context)
         # name = web_dir / url_input
         index.save_to_disk(f"url.json")
  
     # b ir / selected_index_file
-llm_predictor = LLMPredictor(llm=OpenAI(temperature=0, model_name="text-davinci-003", max_tokens=1024))
-service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
 
 index = GPTSimpleVectorIndex.load_from_disk(f"url.json", service_context=service_context)
 if index:
