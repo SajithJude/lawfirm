@@ -66,7 +66,7 @@ else:
 # filter_file_extensions = st.multiselect("Select file extensions to include(optional)", options=[".py"])
 branch = st.selectbox("Select branch",['master','main'])
 # verbose = st.checkbox("Verbose mode")
-concurrent_requests = st.slider("Select number of concurrent requests", min_value=1, max_value=20, value=10)
+# concurrent_requests = st.slider("Select number of concurrent requests", min_value=1, max_value=20, value=10)
 
 # Create index from selected repository
 loa = st.button("Create index")
@@ -80,7 +80,7 @@ if loa and owner and repo:
         # filter_directories=(filter_directories, GithubRepositoryReader.FilterType.INCLUDE),
         # filter_file_extensions=(filter_file_extensions, GithubRepositoryReader.FilterType.INCLUDE),
         verbose=True,
-        concurrent_requests=concurrent_requests,
+        concurrent_requests=10,
     )
 
     docs_branch = loader.load_data(branch=branch)
