@@ -85,7 +85,7 @@ if loa and owner and repo:
 
     docs_branch = loader.load_data(branch=branch)
     index = GPTSimpleVectorIndex.from_documents(docs_branch)
-    index.save_to_disk(f"github.json")
+    index.save_to_disk(f"{repo}.json")
     st.success("Index created from repository successfully")
 
 
@@ -94,7 +94,7 @@ if loa and owner and repo:
 llm_predictor = LLMPredictor(llm=OpenAI(temperature=0, model_name="text-davinci-003", max_tokens=1024))
 service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
 
-index = GPTSimpleVectorIndex.load_from_disk(f"github.json", service_context=service_context)
+index = GPTSimpleVectorIndex.load_from_disk(f"{repo}.json", service_context=service_context)
 if index:
     st.success("Index Loaded from repository successfully")
 
