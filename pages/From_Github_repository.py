@@ -15,7 +15,37 @@ repository_selection = st.radio("How do you wanna start", ["Select on of my exis
 if repository_selection == "Custom URL":
     repo_url = st.text_input("Enter the URL of the GitHub repository")
 else:
-    repolist = ['url1', 'url2']
+    repolist = ['https://github.com/SajithJude/lawfirm',
+            'https://github.com/SajithJude/coursebot',
+            'https://github.com/SajithJude/DocuBOT',
+            'https://github.com/SajithJude/quickbomAI',
+            'https://github.com/SajithJude/databasestreamlit',
+            'https://github.com/SajithJude/flipick',
+            'https://github.com/SajithJude/flipick-chat',
+            'https://github.com/SajithJude/FlipickReports',
+            'https://github.com/SajithJude/SCORM-GPT',
+            'https://github.com/SajithJude/GKwebgen',
+            'https://github.com/SajithJude/SCORMGPT',
+            'https://github.com/SajithJude/demoupworknlp',
+            'https://github.com/SajithJude/modfied-chat-doc',
+            'https://github.com/SajithJude/pdf2bs4',
+            'https://github.com/SajithJude/langchain',
+            'https://github.com/SajithJude/ELC-accessibility',
+            'https://github.com/SajithJude/MoraRPGobi',
+            'https://github.com/SajithJude/QUICKBOM',
+            'https://github.com/SajithJude/pdfopenai',
+            'https://github.com/SajithJude/streamlitUi',
+            'https://github.com/SajithJude/writeforme',
+            'https://github.com/SajithJude/HATCH-HudsonAlpha-Tech-Challenge-2023',
+            'https://github.com/SajithJude/text-Image-Chatbot',
+            'https://github.com/SajithJude/hacktech-2023',
+            'https://github.com/SajithJude/jobreveiw',
+            'https://github.com/SajithJude/AccessibleBeautyAI',
+            'https://github.com/SajithJude/streamlitMLpred',
+            'https://github.com/SajithJude/bipolarTweetdetection',
+            'https://github.com/SajithJude/vehiclediagnostics',
+            'https://github.com/SajithJude/GAN_environment']
+
     repo_url = st.selectbox("Select a repository", repolist)
 
 # Extract owner and repository name from the URL or set to None if not provided
