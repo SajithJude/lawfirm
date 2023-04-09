@@ -6,7 +6,7 @@ from streamlit_chat import message as st_message
 
 
 # favicon = "favicon.ac8d93a.69085235180674d80d902fdc4b848d0b (1).png"
-st.set_page_config(page_title="LawBOT Virtual Assistant", page_icon=None)
+st.set_page_config(page_title="PDFbot Virtual Assistant", page_icon=None)
 
 
 openai.api_key = os.getenv("API_KEY")
@@ -49,7 +49,7 @@ def generate_answer():
 if st.sidebar.button("New Chat"):
     new_chat()
 
-input_text = st.text_input("Ask LawBOT Virtual Assitant a question", key="input_text", on_change=generate_answer)
+input_text = st.text_input("Ask PDF_BOT Virtual Assitant a question", key="input_text", on_change=generate_answer)
 
 if st.session_state.history:
     chat = st.session_state.history[-1]
@@ -68,4 +68,4 @@ def st_message(message, is_user):
     if is_user:
         st.write("You: " + message)
     else:
-        st.write("LawBOT: " + message)
+        st.write("PDF_BOT: " + message)
