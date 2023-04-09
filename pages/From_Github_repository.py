@@ -9,7 +9,6 @@ st.title("Ask Questions from Github Repo")
 download_loader("GithubRepositoryReader")
 from llama_index.readers.llamahub_modules.github_repo import GithubRepositoryReader, GithubClient
 
-col1, col2 = st.columns(2)
 
 
 
@@ -98,6 +97,9 @@ service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
 index = GPTSimpleVectorIndex.load_from_disk(f"github.json", service_context=service_context)
 if index:
     st.success("Index Loaded from repository successfully")
+
+
+col1, col2 = st.columns(2)
 
 with col2.expander("FAQ Questions and responses"):
     about = index.query("What does this application do")
