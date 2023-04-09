@@ -1,6 +1,7 @@
 import os
 import streamlit as st
 from llama_index import download_loader
+download_loader("GithubRepositoryReader")
 from langchain import OpenAI
 from llama_index.readers.llamahub_modules.github_repo import GithubRepositoryReader, GithubClient
 from llama_index import GPTSimpleVectorIndex, Document, LLMPredictor, ServiceContext
