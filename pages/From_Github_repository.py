@@ -57,6 +57,10 @@ if repo_url:
     url_parts = repo_url.strip().split("/")
     owner = url_parts[-2]
     repo = url_parts[-1]
+    if 'repo' not in st.session_state:
+        st.session_state['repo'] = repo
+
+
 else:
     owner = None
     repo = None
@@ -85,7 +89,7 @@ if loa and owner and repo:
 
     docs_branch = loader.load_data(branch=branch)
     index = GPTSimpleVectorIndex.from_documents(docs_branch)
-    index.save_to_disk(f"{repo}.json")
+    index.save_to_disk(f"{st.session_state['repo']}.json")
     st.success("Index created from repository successfully")
 
 
@@ -94,7 +98,7 @@ if loa and owner and repo:
 llm_predictor = LLMPredictor(llm=OpenAI(temperature=0, model_name="text-davinci-003", max_tokens=1024))
 service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
 
-index = GPTSimpleVectorIndex.load_from_disk(f"{repo}.json", service_context=service_context)
+index = GPTSimpleVectorIndex.load_from_disk(f"{st.session_state['repo']}.json", service_context=service_context)
 if index:
     st.success("Index Loaded from repository successfully")
 
@@ -109,7 +113,7 @@ with col2.expander("FAQ Questions and responses",expanded=True):
     st.markdown("### What are the technologies and libraries used in this repo ?")
     st.write(tech.response)
    
-with col1.expander("Ask your own Questions",expanded=False):
+with col1.expander("Ask your own Questions",expanded=True):
     # Query the index with user input
     inp = st.text_input("Ask question")
     ask = st.button("Submit")
