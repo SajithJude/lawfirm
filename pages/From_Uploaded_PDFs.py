@@ -68,6 +68,8 @@ def new_chat():
 
 
 DATA_DIR = "data"
+if not os.path.exists("data"):
+    os.mkdir("data")
 
 with st.expander("Manage_Books"):
     st.subheader("PDF document Management Portal")
