@@ -1,7 +1,6 @@
 import os
 import streamlit as st
 from llama_index import download_loader
-download_loader("GithubRepositoryReader")
 from langchain import OpenAI
 from llama_index.readers.llamahub_modules.github_repo import GithubRepositoryReader, GithubClient
 from llama_index import GPTSimpleVectorIndex, Document, LLMPredictor, ServiceContext
@@ -24,10 +23,11 @@ else:
     repo = None
 
 # Define Streamlit input components for filtering options and other parameters
-filter_directories = st.multiselect("Select branch", options=["master", "main"])
-# filter_file_extensions = st.multiselect("Select file extensions to include", options=[".py"])
+filter_directories = st.multiselect("Select directories to include(Optional)", options=["pages", "docs"])
+filter_file_extensions = st.multiselect("Select file extensions to include(optional)", options=[".py"])
+branch = se.selectbox("Select branch",['master','main'])
 verbose = st.checkbox("Verbose mode")
-# concurrent_requests = st.slider("Select number of concurrent requests", min_value=1, max_value=20, value=10)
+concurrent_requests = st.slider("Select number of concurrent requests", min_value=1, max_value=20, value=10)
 
 
 loa = st.button("Create index")
@@ -39,13 +39,13 @@ if loa and owner and repo:
         github_client,
         owner=owner,
         repo=repo,
-        # filter_directories=(filter_directories, GithubRepositoryReader.FilterType.INCLUDE),
-        # filter_file_extensions=(filter_file_extensions, GithubRepositoryReader.FilterType.INCLUDE),
+        filter_directories=(filter_directories, GithubRepositoryReader.FilterType.INCLUDE),
+        filter_file_extensions=(filter_file_extensions, GithubRepositoryReader.FilterType.INCLUDE),
         verbose=verbose,
-        concurrent_requests=5,
+        concurrent_requests=concurrent_requests,
     )
 
-    docs_branch = loader.load_data(branch=filter_directories)
+    docs_branch = loader.load_data(branch=branch)
     index = GPTSimpleVectorIndex.from_documents(docs_branch)
     index.save_to_disk(f"github.json")
     st.success("Index created from repository successfully")
