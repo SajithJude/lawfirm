@@ -15,11 +15,11 @@ repository_selection = st.radio("How do you wanna start", ["Select on of my exis
 if repository_selection == "Custom URL":
     repo_url = st.text_input("Enter the URL of the GitHub repository")
 else:
-    repolist = ['https://github.com/SajithJude/lawfirm',
+    repolist = ['https://github.com/SajithJude/ideagen',
             'https://github.com/SajithJude/coursebot',
             'https://github.com/SajithJude/DocuBOT',
             'https://github.com/SajithJude/quickbomAI',
-            'https://github.com/SajithJude/databasestreamlit',
+            'https://github.com/SajithJude/portfolioweb',
             'https://github.com/SajithJude/flipick',
             'https://github.com/SajithJude/flipick-chat',
             'https://github.com/SajithJude/FlipickReports',
