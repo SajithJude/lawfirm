@@ -14,7 +14,7 @@ web_dir.mkdir(exist_ok=True)
 # Create directory if it doesn't exist
 # Streamlit app code
 st.title("Chat with Knowledge from Scraped Web Content")
-
+st.caption("This app allows users to input a URL from the internet and scrape content from it. The app uses web scraping techniques to extract relevant information from the webpage and can identify and retrieve data such as article titles, text content, and images. Users can then ask custom questions related to the scraped content, and the app will provide them with the answers. The app can also provide users with additional information related to the content, such as the author's name, publication date, or any relevant keywords. The app is designed to make it easy for users to gather information from the internet and quickly find the answers they need.")
 with st.expander("Input URL"):
 
 # Input field for the URL to be loaded in the data
