@@ -90,6 +90,7 @@ if loa and owner and repo:
 
     about = index.query("What does this application do")
     tech = index.query("What are the technologies and libraries used in this repo")
+col1, col2 = st.columns(2)
 
 # Load index from saved file
 llm_predictor = LLMPredictor(llm=OpenAI(temperature=0, model_name="text-davinci-003", max_tokens=1024))
@@ -100,11 +101,10 @@ if index:
     st.success("Index Loaded from repository successfully")
 
 
-col1, col2 = st.columns(2)
 
 with col2.expander("FAQ Questions and responses",expanded=True):
-    about = index.query("What does this application do")
-    tech = index.query("What are the technologies and libraries used in this repo")
+    # about = index.query("What does this application do")
+    # tech = index.query("What are the technologies and libraries used in this repo")
     st.markdown("### What does this application do?")
     st.write(about.response)
     st.markdown("### What are the technologies and libraries used in this repo ?")
