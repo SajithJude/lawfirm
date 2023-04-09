@@ -6,6 +6,9 @@ from llama_index import GPTSimpleVectorIndex, Document, LLMPredictor, ServiceCon
 
 st.title("Ask Questions from Github Repo")
 
+st.caption("This App interacts with GitHub repositories and allows you to ask questions related to those repositories. you can choose from my personal existing repositories or provide a custom external repository URL, select the branch they want to ask questions from, and ask their own custom questions related to the repository. The app can retrieve information related to the frameworks used in the repository or any other relevant information and provide users with the answers.")
+
+
 download_loader("GithubRepositoryReader")
 from llama_index.readers.llamahub_modules.github_repo import GithubRepositoryReader, GithubClient
 
