@@ -24,8 +24,8 @@ else:
     repo = None
 
 # Define Streamlit input components for filtering options and other parameters
-filter_directories = st.multiselect("Select directories to include", options=["pages", "docs"])
-filter_file_extensions = st.multiselect("Select file extensions to include", options=[".py"])
+# filter_directories = st.multiselect("Select directories to include", options=["pages", "docs"])
+# filter_file_extensions = st.multiselect("Select file extensions to include", options=[".py"])
 verbose = st.checkbox("Verbose mode")
 concurrent_requests = st.slider("Select number of concurrent requests", min_value=1, max_value=20, value=10)
 
@@ -39,8 +39,8 @@ if loa and owner and repo:
         github_client,
         owner=owner,
         repo=repo,
-        filter_directories=(filter_directories, GithubRepositoryReader.FilterType.INCLUDE),
-        filter_file_extensions=(filter_file_extensions, GithubRepositoryReader.FilterType.INCLUDE),
+        # filter_directories=(filter_directories, GithubRepositoryReader.FilterType.INCLUDE),
+        # filter_file_extensions=(filter_file_extensions, GithubRepositoryReader.FilterType.INCLUDE),
         verbose=verbose,
         concurrent_requests=concurrent_requests,
     )
