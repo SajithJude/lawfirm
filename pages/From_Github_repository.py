@@ -23,8 +23,8 @@ else:
     repo = None
 
 # Define Streamlit input components for filtering options and other parameters
-filter_directories = st.multiselect("Select directories to include(Optional)", options=["pages", "docs"])
-filter_file_extensions = st.multiselect("Select file extensions to include(optional)", options=[".py"])
+# filter_directories = st.multiselect("Select directories to include(Optional)", options=["pages", "docs"])
+# filter_file_extensions = st.multiselect("Select file extensions to include(optional)", options=[".py"])
 branch = st.selectbox("Select branch",['master','main'])
 verbose = st.checkbox("Verbose mode")
 concurrent_requests = st.slider("Select number of concurrent requests", min_value=1, max_value=20, value=10)
