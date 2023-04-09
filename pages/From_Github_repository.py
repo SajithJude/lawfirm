@@ -24,10 +24,10 @@ else:
     repo = None
 
 # Define Streamlit input components for filtering options and other parameters
-# filter_directories = st.multiselect("Select directories to include", options=["pages", "docs"])
+filter_directories = st.multiselect("Select branch", options=["master", "main"])
 # filter_file_extensions = st.multiselect("Select file extensions to include", options=[".py"])
 verbose = st.checkbox("Verbose mode")
-concurrent_requests = st.slider("Select number of concurrent requests", min_value=1, max_value=20, value=10)
+# concurrent_requests = st.slider("Select number of concurrent requests", min_value=1, max_value=20, value=10)
 
 
 loa = st.button("Create index")
@@ -42,10 +42,10 @@ if loa and owner and repo:
         # filter_directories=(filter_directories, GithubRepositoryReader.FilterType.INCLUDE),
         # filter_file_extensions=(filter_file_extensions, GithubRepositoryReader.FilterType.INCLUDE),
         verbose=verbose,
-        concurrent_requests=concurrent_requests,
+        concurrent_requests=5,
     )
 
-    docs_branch = loader.load_data(branch="master")
+    docs_branch = loader.load_data(branch=filter_directories)
     index = GPTSimpleVectorIndex.from_documents(docs_branch)
     index.save_to_disk(f"github.json")
     st.success("Index created from repository successfully")
