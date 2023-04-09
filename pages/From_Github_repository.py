@@ -88,7 +88,8 @@ if loa and owner and repo:
     index.save_to_disk(f"github.json")
     st.success("Index created from repository successfully")
 
-
+    about = index.query("What does this application do")
+    tech = index.query("What are the technologies and libraries used in this repo")
 
 # Load index from saved file
 llm_predictor = LLMPredictor(llm=OpenAI(temperature=0, model_name="text-davinci-003", max_tokens=1024))
