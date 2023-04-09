@@ -103,11 +103,11 @@ with col2.expander("Details about repo"):
     about = index.query("What does this application do")
     tech = index.query("What are the technologies and libraries used in this repo")
     coms = index.query("How many commits have been made and when was the first and last commit")
-    st.subheader("What does this application do?")
+    st.markdown("### What does this application do?")
     st.write(about.response)
-    st.subheader("What are the technologies and libraries used in this repo ?")
+    st.markdown("### What are the technologies and libraries used in this repo ?")
     st.write(tech.response)
-    st.subheader("How many commits have been made and when was the first and last commit ?")
+    st.markdown("### How many commits have been made ?")
     st.write(coms.response)
 
 # Query the index with user input
