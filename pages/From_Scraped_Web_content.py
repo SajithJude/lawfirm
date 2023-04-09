@@ -1,10 +1,11 @@
 import streamlit as st
 from pathlib import Path
 import llama_index
-from llama_index import download_loader, GPTSimpleVectorIndex, Document
+from langchain import OpenAI
+from llama_index import download_loader, GPTSimpleVectorIndex, Document,  LLMPredictor, ServiceContext
 import os
 
-AudioTranscriber = download_loader("AudioTranscriber")
+# AudioTranscriber = download_loader("AudioTranscriber")
 BeautifulSoupWebReader = download_loader("BeautifulSoupWebReader")
 
 web_dir = Path("Web")
@@ -30,10 +31,12 @@ with st.expander("Input URL"):
         index.save_to_disk(f"url.json")
  
     # b ir / selected_index_file
-index = GPTSimpleVectorIndex.load_from_disk(f"url.json")
+llm_predictor = LLMPredictor(llm=OpenAI(temperature=0, model_name="text-davinci-003", max_tokens=1024))
+service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
 
-    # except NameError:
-    #     st.warning("No index files found, Input a URL above and Scrape content to index the website.")
+index = GPTSimpleVectorIndex.load_from_disk(f"url.json", service_context=service_context)
+if index:
+    st.success("Index Loaded from repository successfully")
 
 inp = st.text_input("Ask question")
 ask = st.button("Submit")
