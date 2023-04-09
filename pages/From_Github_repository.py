@@ -39,8 +39,8 @@ if loa and owner and repo:
         github_client,
         owner=owner,
         repo=repo,
-        filter_directories=(filter_directories, GithubRepositoryReader.FilterType.INCLUDE),
-        filter_file_extensions=(filter_file_extensions, GithubRepositoryReader.FilterType.INCLUDE),
+        # filter_directories=(filter_directories, GithubRepositoryReader.FilterType.INCLUDE),
+        # filter_file_extensions=(filter_file_extensions, GithubRepositoryReader.FilterType.INCLUDE),
         verbose=verbose,
         concurrent_requests=concurrent_requests,
     )
