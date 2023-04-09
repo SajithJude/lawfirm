@@ -68,34 +68,6 @@ def new_chat():
 
 
 DATA_DIR = "data"
-# Get a list of available index files in the data directory
-index_filenames = [f for f in os.listdir(DATA_DIR) if f.endswith(".json")]
-
-
-if index_filenames:
-    # If there are index files available, create a dropdown to select the index file to load
-    index_file = st.selectbox("Select an index file to load:", index_filenames)
-    index_path = os.path.join(DATA_DIR, index_file)
-    index = GPTSimpleVectorIndex.load_from_disk(index_path)
-else:
-    # If there are no index files available, prompt the user to upload a PDF file
-    st.warning("No index files found. Please upload a PDF file to create an index.")
-    
-
-def generate_answer():
-    user_message = st.session_state.input_text
-    query_str = str(user_message)
-    message_bot = index.query(query_str, response_mode="compact", mode="embedding")
-    st.session_state.history.append({"message": user_message, "is_user": True})
-    st.session_state.history.append({"message": str(message_bot), "is_user": False})
-    st.session_state.input_text = ""
-    # st.session_state.history = [{"message": user_message, "is_user": True},
-    #                             {"message": str(message_bot), "is_user": False}]
-
-if st.sidebar.button("New Chat"):
-    new_chat()
-
-
 
 with st.expander("Manage_Books"):
     st.subheader("PDF document Management Portal")
@@ -152,6 +124,36 @@ with st.expander("Manage_Books"):
         button_phold = col3.empty()  # create a placeholder
         do_action = button_phold.button(button_type, key=i, on_click=delete_file, args=(DATA_DIR, Name))
     
+
+
+# Get a list of available index files in the data directory
+index_filenames = [f for f in os.listdir(DATA_DIR) if f.endswith(".json")]
+
+
+if index_filenames:
+    # If there are index files available, create a dropdown to select the index file to load
+    index_file = st.selectbox("Select an index file to load:", index_filenames)
+    index_path = os.path.join(DATA_DIR, index_file)
+    index = GPTSimpleVectorIndex.load_from_disk(index_path)
+else:
+    # If there are no index files available, prompt the user to upload a PDF file
+    st.warning("No index files found. Please upload a PDF file to create an index.")
+    
+
+def generate_answer():
+    user_message = st.session_state.input_text
+    query_str = str(user_message)
+    message_bot = index.query(query_str, response_mode="compact", mode="embedding")
+    st.session_state.history.append({"message": user_message, "is_user": True})
+    st.session_state.history.append({"message": str(message_bot), "is_user": False})
+    st.session_state.input_text = ""
+    # st.session_state.history = [{"message": user_message, "is_user": True},
+    #                             {"message": str(message_bot), "is_user": False}]
+
+if st.sidebar.button("New Chat"):
+    new_chat()
+
+
 
 
 
