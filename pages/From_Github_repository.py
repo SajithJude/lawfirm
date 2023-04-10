@@ -108,11 +108,12 @@ if loa and owner and repo:
         st.write(tech.response)
 
    
-    with col1.expander("Ask your own Questions",expanded=True):
+    # with col1.expander("Ask your own Questions",expanded=True):
         # Query the index with user input
-        inp = st.text_input("Ask question")
-        ask = st.button("Submit")
+    inp = st.text_input("Ask question")
+    ask = st.button("Submit")
 
-        if ask:
-            res = index.query(inp)
-            st.write(res)
+    if ask:
+        res = index.query(inp)
+        st.write(res)
+        pass
