@@ -9,55 +9,55 @@ st.write('You will be able to connect data from the following sources:')
 # Adding image cards for each data source
 col1, col2, col3 = st.columns(3)
 with col1:
-    st.image('images/drive.png', width=100)
-    st.write('Google Drive')
+    # st.image('images/drive.png', width=100)
+    st.subheader('Google Drive')
 with col2:
-    st.image('images/drive.png', width=100)
-    st.write('Gmail')
+    # st.image('images/drive.png', width=100)
+    st.subheader('Gmail')
 with col3:
-    st.image('images/drive.png', width=100)
-    st.write('Google Calander Loader')
+    # st.image('images/drive.png', width=100)
+    st.subheader('Google Calander Loader')
 
 col4, col5, col6 = st.columns(3)
 with col4:
-    st.image('images/drive.png', width=100)
-    st.write('Confluence ')
+    # st.image('images/drive.png', width=100)
+    st.subheader('Confluence ')
 with col5:
-    st.image('images/drive.png', width=100)
-    st.write('MongoDB Connector')
+    # st.image('images/drive.png', width=100)
+    st.subheader('MongoDB ')
 with col6:
-    st.image('images/drive.png', width=100)
-    st.write('PostgreSQL ')
+    # st.image('images/drive.png', width=100)
+    st.subheader('PostgreSQL ')
 
 col7, col8, col9 = st.columns(3)
 with col7:
-    st.image('images/drive.png', width=100)
-    st.write('MySQL ')
+    # st.image('images/drive.png', width=100)
+    st.subheader('MySQL ')
 with col8:
-    st.image('images/drive.png', width=100)
-    st.write('BigQuery ')
+    # st.image('images/drive.png', width=100)
+    st.subheader('BigQuery ')
 with col9:
-    st.image('images/drive.png', width=100)
-    st.write('Redshift ')
+    # st.image('images/drive.png', width=100)
+    st.subheader('Redshift ')
 
 col10, col11, col12 = st.columns(3)
 with col10:
-    st.image('images/drive.png', width=100)
-    st.write('Snowflake ')
+    # st.image('images/drive.png', width=100)
+    st.subheader('Snowflake ')
 with col11:
-    st.image('images/drive.png', width=100)
-    st.write('Oracle ')
+    # st.image('images/drive.png', width=100)
+    st.subheader('Oracle ')
 with col12:
-    st.image('images/drive.png', width=100)
-    st.write('SQLite ')
+    # st.image('images/drive.png', width=100)
+    st.subheader('SQLite ')
 
 col13, col14 ,col15 = st.columns(3)
 with col13:
-    st.image('images/drive.png', width=100)
-    st.write('Notion ')
+    # st.image('images/drive.png', width=100)
+    st.subheader('Notion ')
 with col14:
-    st.image('images/drive.png', width=100)
-    st.write('DynamoDB ')
+    # st.image('images/drive.png', width=100)
+    st.subheader('DynamoDB ')
 with col15:
-    st.image('images/drive.png', width=100)
-    st.write('AWS S3 ')
+    # st.image('images/drive.png', width=100)
+    st.subheader('AWS S3 ')
