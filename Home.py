@@ -9,7 +9,7 @@ st.write('You will be able to connect data from the following sources:')
 # Adding image cards for each data source
 col1, col2, col3 = st.columns(3)
 with col1:
-    st.image('Drive.png', width=100)
+    st.image('images/drive.png', width=100)
     st.write('Google Drive')
 with col2:
     st.image('images/gmail.png', width=100)
