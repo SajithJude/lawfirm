@@ -17,9 +17,9 @@ if "audioIndex" not in st.session_state:
 st.title("Query Audio Files")
 st.caption("This app enables users to upload audio files, and Users can then ask custom questions related to the audio's content, and the app will provide them with the answers. The app can also identify and extract relevant information from the audio, such as names, dates, or locations, summaries, key points to provide more accurate answers. The app is designed to make it easy for users to gather information from audio content and quickly find the answers they need.")
 
-with st.expander("Upload Audio"):
+with st.expander("Upload Audio/Video"):
     # Allow user to upload audio file
-    audio_file = st.file_uploader("Upload audio file", type=["mp3", "wav"])
+    audio_file = st.file_uploader("Upload audio/Video file", type=["mp3", "wav","mp4"])
 
     # Save audio file to "audio" directory
     if audio_file is not None:
