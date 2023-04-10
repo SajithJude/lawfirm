@@ -94,7 +94,10 @@ if loa and owner and repo:
         concurrent_requests=10,
     )
 
-    docs_branch = loader.load_data(branch=branch)
+    try:
+        docs_branch = loader.load_data(branch=branch)
+    except KeyError:
+        st.warning("Incorrect Branch Name")
     # Load index from saved file
     llm_predictor = LLMPredictor(llm=OpenAI(temperature=0, model_name="text-davinci-003", max_tokens=1024))
     service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
