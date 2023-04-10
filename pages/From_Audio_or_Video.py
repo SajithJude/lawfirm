@@ -14,8 +14,8 @@ audio_dir.mkdir(exist_ok=True)
 if "audioIndex" not in st.session_state:
     st.session_state.audioIndex = ""
 # Streamlit app code
-st.title("Query Audio Files")
-st.caption("This app enables users to upload audio files, and Users can then ask custom questions related to the audio's content, and the app will provide them with the answers. The app can also identify and extract relevant information from the audio, such as names, dates, or locations, summaries, key points to provide more accurate answers. The app is designed to make it easy for users to gather information from audio content and quickly find the answers they need.")
+st.title("Query Audio/Video Files")
+st.caption("This app enables users to upload audio/Video files, and Users can then ask custom questions related to the audio's content, and the app will provide them with the answers. The app can also identify and extract relevant information from the audio, such as names, dates, or locations, summaries, key points to provide more accurate answers. The app is designed to make it easy for users to gather information from audio content and quickly find the answers they need.")
 
 with st.expander("Upload Audio/Video"):
     # Allow user to upload audio file
