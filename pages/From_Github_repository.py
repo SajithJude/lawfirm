@@ -117,5 +117,8 @@ with col1.expander("Ask your own Questions",expanded=True):
     ask = st.button("Submit")
 
     if ask:
-        res = st.session_state["index"].query(inp)
-        st.write(res)
+        try:
+            res = st.session_state["index"].query(inp)
+            st.write(res)
+        except AttributeError:
+            st.warning("Fetch Repo before submiting query")
