@@ -20,7 +20,7 @@ with col3:
 
 col4, col5, col6 = st.columns(3)
 with col4:
-    st.image('images/drive.jpg', width=100)
+    st.image('images/drive.png', width=100)
     st.write('Confluence ')
 with col5:
     st.image('images/drive.png', width=100)
