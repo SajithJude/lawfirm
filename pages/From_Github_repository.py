@@ -77,6 +77,9 @@ branch = st.text_input("Input Branch Name")
 
 # Create index from selected repository
 loa = st.button("Fetch Repo")
+
+col1, col2 = st.columns(2)
+
 if loa and owner and repo:
     # Load data from the GitHub repository using the selected input parameters
     github_client = GithubClient(os.getenv("GITHUB_TOKEN"))
@@ -91,36 +94,28 @@ if loa and owner and repo:
     )
 
     docs_branch = loader.load_data(branch=branch)
-    index = GPTSimpleVectorIndex.from_documents(docs_branch)
-    index.save_to_disk(f"{st.session_state['repo']}.json")
-    st.success("Index created from repository successfully")
+    # Load index from saved file
+    llm_predictor = LLMPredictor(llm=OpenAI(temperature=0, model_name="text-davinci-003", max_tokens=1024))
+    service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
+
+    index = GPTSimpleVectorIndex.from_documents(docs_branch,service_context=service_context)
+    with col2.expander("FAQ Questions and responses",expanded=True):
+        about = index.query("What does this application do")
+        tech = index.query("What are the technologies and libraries used in this repo")
+        st.markdown("### What does this application do?")
+        st.write(about.response)
+        st.markdown("### What are the technologies and libraries used in this repo ?")
+        st.write(tech.response)
+    # index.save_to_disk(f"{st.session_state['repo']}.json")
+    # st.success("Index created from repository successfully")
 
 
-
-# Load index from saved file
-llm_predictor = LLMPredictor(llm=OpenAI(temperature=0, model_name="text-davinci-003", max_tokens=1024))
-service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
-
-index = GPTSimpleVectorIndex.load_from_disk(f"{st.session_state['repo']}.json", service_context=service_context)
-if index:
-    st.success(f"{st.session_state['repo']} Index Loaded from repository successfully")
-
-
-col1, col2 = st.columns(2)
-
-with col2.expander("FAQ Questions and responses",expanded=True):
-    about = index.query("What does this application do")
-    tech = index.query("What are the technologies and libraries used in this repo")
-    st.markdown("### What does this application do?")
-    st.write(about.response)
-    st.markdown("### What are the technologies and libraries used in this repo ?")
-    st.write(tech.response)
    
-with col1.expander("Ask your own Questions",expanded=True):
-    # Query the index with user input
-    inp = st.text_input("Ask question")
-    ask = st.button("Submit")
+    with col1.expander("Ask your own Questions",expanded=True):
+        # Query the index with user input
+        inp = st.text_input("Ask question")
+        ask = st.button("Submit")
 
-    if ask:
-        res = index.query(inp)
-        st.write(res)
+        if ask:
+            res = index.query(inp)
+            st.write(res)
