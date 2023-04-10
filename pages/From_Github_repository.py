@@ -96,22 +96,24 @@ if loa and owner and repo:
 
     try:
         docs_branch = loader.load_data(branch=branch)
+    
+    # Load index from saved file
+        llm_predictor = LLMPredictor(llm=OpenAI(temperature=0, model_name="text-davinci-003", max_tokens=1024))
+        service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
+
+        index = GPTSimpleVectorIndex.from_documents(docs_branch,service_context=service_context)
+        # if "index" not in st.session_state:
+        st.session_state["index"] = index
+        with col2.expander("FAQ Questions and responses",expanded=True):
+            about = index.query("What does this application do")
+            tech = index.query("What are the technologies and libraries used in this repo")
+            st.markdown("### What does this application do?")
+            st.write(about.response)
+            st.markdown("### What are the technologies and libraries used in this repo ?")
+            st.write(tech.response)
+
     except KeyError:
         st.warning("Incorrect Branch Name")
-    # Load index from saved file
-    llm_predictor = LLMPredictor(llm=OpenAI(temperature=0, model_name="text-davinci-003", max_tokens=1024))
-    service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
-
-    index = GPTSimpleVectorIndex.from_documents(docs_branch,service_context=service_context)
-    # if "index" not in st.session_state:
-    st.session_state["index"] = index
-    with col2.expander("FAQ Questions and responses",expanded=True):
-        about = index.query("What does this application do")
-        tech = index.query("What are the technologies and libraries used in this repo")
-        st.markdown("### What does this application do?")
-        st.write(about.response)
-        st.markdown("### What are the technologies and libraries used in this repo ?")
-        st.write(tech.response)
 
    
 with col1.expander("Ask your own Questions",expanded=True):
