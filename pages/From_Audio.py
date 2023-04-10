@@ -57,4 +57,4 @@ inp = st.text_input("ask question")
 ask = st.button("submit")
 if ask:
     res = st.session_state.audioIndex.query(inp)
-    st.write(res)
+    st.write(res.response)
