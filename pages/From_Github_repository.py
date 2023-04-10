@@ -106,9 +106,6 @@ if loa and owner and repo:
         st.write(about.response)
         st.markdown("### What are the technologies and libraries used in this repo ?")
         st.write(tech.response)
-    # index.save_to_disk(f"{st.session_state['repo']}.json")
-    # st.success("Index created from repository successfully")
-
 
    
     with col1.expander("Ask your own Questions",expanded=True):
