@@ -4,7 +4,7 @@ st.title('OpenAI-powered Chatbot Demo Apps')
 
 st.write('Build custom chatbots with my OpenAI-powered demo apps that connect to various data sources, including PDFs, PPTX files, audio files, and scraped internet data. Respond to users in a conversational manner, allowing you to engage with your customers and provide them with the information they need. Explore my portfolio of easy-to-use demo apps today!')
 
-st.write('You will be able to connect data from the following sources:')
+st.markdown('For a sample demo I have connected ### Github Repository data in this app, but I will be able to connect data from the following sources as well:')
 
 # Adding image cards for each data source
 col1, col2, col3 = st.columns(3)
