@@ -113,7 +113,7 @@ if loa and owner and repo:
             st.write(tech.response)
 
     except KeyError:
-        st.warning("Incorrect Branch Name")
+        st.warning("Incorrect Branch Name, change branch name and Re Fetch Repo")
 
    
 with col1.expander("Ask your own Questions",expanded=True):
