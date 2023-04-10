@@ -13,7 +13,8 @@ download_loader("GithubRepositoryReader")
 from llama_index.readers.llamahub_modules.github_repo import GithubRepositoryReader, GithubClient
 
 
-
+if "index" not in st.session_state:
+        st.session_state["index"] = ""
 
 
 # with col1.expander("Select Repository"):
@@ -99,6 +100,8 @@ if loa and owner and repo:
     service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
 
     index = GPTSimpleVectorIndex.from_documents(docs_branch,service_context=service_context)
+    # if "index" not in st.session_state:
+    st.session_state["index"] = index
     with col2.expander("FAQ Questions and responses",expanded=True):
         about = index.query("What does this application do")
         tech = index.query("What are the technologies and libraries used in this repo")
@@ -114,5 +117,5 @@ with col1.expander("Ask your own Questions",expanded=True):
     ask = st.button("Submit")
 
     if ask:
-        res = index.query(inp)
+        res = st.session_state["index"].query(inp)
         st.write(res)
