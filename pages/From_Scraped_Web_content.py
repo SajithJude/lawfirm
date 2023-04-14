@@ -51,30 +51,3 @@ if ask:
     pass
 
 
-if "file_paths" not in st.session_state:
-    st.session_state.file_paths = []
-
-# Select directory to download files from
-dir_path = st.selectbox("Select directory", os.listdir())
-if dir_path:
-    # Check if selected path is a directory
-    if os.path.isdir(dir_path):
-        # Get list of files in directory
-        file_names = os.listdir(dir_path)
-        file_paths = [os.path.join(dir_path, file_name) for file_name in file_names if file_name.endswith(".txt")]
-
-        if not file_paths:
-            st.warning("No .txt files found in directory!")
-        else:
-            st.success(f"{len(file_paths)} .txt files found in directory.")
-            st.session_state.file_paths = file_paths
-
-# Display download button if files are selected
-if st.session_state.file_paths:
-    download_button = st.button("Download Files")
-    if download_button:
-        with st.spinner("Downloading..."):
-            for file_path in st.session_state.file_paths:
-                with open(file_path, "rb") as file:
-                    file_content = file.read()
-                    st.download_button(label=file_path, data=file_content, file_name=os.path.basename(file_path))
