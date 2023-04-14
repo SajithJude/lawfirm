@@ -38,9 +38,11 @@ else:
 
 inp= st.text_input("Input a query")
 send = st.button("Submit")
-
+clear = st.button("clear sessionstate")
 if send:
     resp= st.session_state.index.query(inp)
     st.write(resp.response)
     pass
 
+if clear:
+    tmp_path.unlink()
