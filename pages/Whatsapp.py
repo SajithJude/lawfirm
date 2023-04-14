@@ -25,8 +25,8 @@ if uploaded_file is not None:
     st.write("Loaded chat data:")
     # st.write(documents)
     intax = GPTSimpleVectorIndex.from_documents(documents)
-    if index not in st.session_state:
-        st.session_state.index = intax
+    if intax not in st.session_state:
+        st.session_state.intax = intax
         st.success("session state added index")
 
     
