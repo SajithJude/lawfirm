@@ -10,6 +10,7 @@ st.title("WhatsApp Chat Analyzer")
 
 # File uploader
 # File uploader
+# File uploader
 uploaded_file = st.file_uploader("Upload your WhatsApp chat .txt file", type="txt")
 
 if uploaded_file is not None:
@@ -17,14 +18,13 @@ if uploaded_file is not None:
     data_dir = Path("whatsapp")
     if not data_dir.exists():
         data_dir.mkdir()
-    
-    with NamedTemporaryFile(delete=False, suffix=".txt") as tmp:
-        tmp.write(uploaded_file.getvalue())
-        tmp_path = Path(tmp.name)
+
+    # Save the uploaded file to the "whatsapp" directory
+    data_path = data_dir / uploaded_file.name
+    with open(data_path, "wb") as f:
+        f.write(uploaded_file.getvalue())
 
     # Load and process the data
-    # WhatsappChatLoader = download_loader("WhatsappChatLoader")
-    # loader = WhatsappChatLoader(path=str(tmp_path))
     documents = SimpleDirectoryReader(str(data_dir)).load_data()
 
     # Display the results
@@ -35,11 +35,8 @@ if uploaded_file is not None:
         st.session_state.intax = intax
         st.success("session state added index")
 
-    # Clean up temporary file
-    tmp_path.unlink()
 else:
     st.warning("Please upload a .txt file to analyze WhatsApp chats.")
-
 
 inp= st.text_input("Input a query")
 send = st.button("Submit")
