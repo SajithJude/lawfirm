@@ -24,9 +24,9 @@ if uploaded_file is not None:
     # Display the results
     st.write("Loaded chat data:")
     # st.write(documents)
-    index = GPTSimpleVectorIndex.from_documents(documents)
+    intax = GPTSimpleVectorIndex.from_documents(documents)
     if index not in st.session_state:
-        st.session_state.index = index
+        st.session_state.index = intax
         st.success("session state added index")
 
     
@@ -40,7 +40,7 @@ inp= st.text_input("Input a query")
 send = st.button("Submit")
 clear = st.button("clear sessionstate")
 if send:
-    resp= st.session_state.index.query(inp)
+    resp= st.session_state.intax.query(inp)
     st.write(resp.response)
     pass
 
