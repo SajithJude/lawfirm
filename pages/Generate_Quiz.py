@@ -30,7 +30,7 @@ num_quest = st.slider('Number of questions to generate', 0, 4, 1)
 result = st.button("Submit")
 
 if result:
-    prompt = f"generate {num_quest} short answer questions with answers on the topic of {topic}, with the all the possible correct comprehensive answers, show the output in following json list format:\n {form}."
+    prompt = f"generate {num_quest} short answer questions with short answers on the topic of {topic}, with the all the possible correct comprehensive answers, show the output in following json list format:\n {form}."
     response = openai.Completion.create(
         model="text-davinci-003",
         prompt=prompt,
