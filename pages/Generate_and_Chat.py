@@ -67,9 +67,9 @@ except AttributeError:
     st.warning("Type a topic and generate some questions to refine them")
 
 st.header("Start Quiz")
-start_quiz = st.button("Start Quiz")
+# start_quiz = st.button("Start Quiz")
 
-if start_quiz:
+try:
     if 'current_question' not in st.session_state:
         st.session_state.current_question = 0
 
@@ -121,3 +121,5 @@ if start_quiz:
                 message(st.session_state.generated[i], key=str(i))
                 message(st.session_state.past[i], is_user=True, key=str(i) + '_user')
                 st.sidebar.write("Bot: ", st.session_state.generated[i])
+except:
+    st.info("Generate some questions first to start quiz")
