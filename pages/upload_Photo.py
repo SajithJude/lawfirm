@@ -84,10 +84,10 @@ if img_file_buffer is not None:
         try:
             if os.path.isfile(file_path):
                 os.unlink(file_path)
-            st.info("cache cleared")
+            # st.info("cache cleared")
         except Exception as e:
             print(e)
-st.write("Text directory cleared")
+    st.info("Text directory cleared")
 
     # intax.save(str(index_path))
     # st.write("Index created for text directory")
