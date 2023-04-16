@@ -64,7 +64,7 @@ if img_file_buffer is not None:
     result = callAPI(encoded_image)
     # try:
     info = result['responses'][0]['textAnnotations'][0]['description']
-    st.image(img_file_buffer)
+    # st.image(img_file_buffer)
     st.caption("Text Recognized")
     st.write(info)
     save_text(info)
@@ -84,8 +84,8 @@ if img_file_buffer is not None:
         #     intax = download_loader(str(index_path))
         #     st.write("Index loaded from file")
 
-    else:
-        st.warning("Directory 'text' not found. Please save OCR output text files to 'text' directory.")
+else:
+    st.warning("Directory 'text' not found. Please save OCR output text files to 'text' directory.")
 
     # except: 
     #     st.write(e)
