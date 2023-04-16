@@ -11,9 +11,6 @@ st.set_option('deprecation.showfileUploaderEncoding', False)
 # Title
 st.title("OCR and Search")
 
-# OCR radio buttons
-ocr_type = st.radio("Select OCR type", ("Upload Image", "Take a Picture"))
-
 # OCR function
 def callAPI(image):
     vision_url = 'https://vision.googleapis.com/v1/images:annotate?key='
@@ -56,44 +53,38 @@ def save_text(text):
         st.write('Text saved to file:', file_path)
 
 # Photo taker
-if ocr_type == "Take a Picture":
-    img_file_buffer = st.camera_input("Take a picture")
-    if img_file_buffer is not None:
-        # Get the photo name to save the text file with the same name
-        st.session_state.photo_name = f"photo_{st.session_state.get('photo_counter', 0)}.jpg"
-        st.session_state.photo_counter = st.session_state.get("photo_counter", 0) + 1
+img_file_buffer = st.camera_input("Take a picture")
+if img_file_buffer is not None:
+    # Get the photo name to save the text file with the same name
+    st.session_state.photo_name = f"photo_{st.session_state.get('photo_counter', 0)}.jpg"
+    st.session_state.photo_counter = st.session_state.get("photo_counter", 0) + 1
 
-        # OCR and save text file
-        encoded_image = base64.b64encode(img_file_buffer.read())
-        result = callAPI(encoded_image)
-        try:
-            info = result['responses'][0]['textAnnotations'][0]['description']
-            st.image(img_file_buffer)
-            st.caption("Text Recognized")
-            st.write(info)
-            save_text(info)
+    # OCR and save text file
+    encoded_image = base64.b64encode(img_file_buffer.read())
+    result = callAPI(encoded_image)
+    try:
+        info = result['responses'][0]['textAnnotations'][0]['description']
+        st.image(img_file_buffer)
+        st.caption("Text Recognized")
+        st.write(info)
+        save_text(info)
 
-            # Create index from text directory
-            text_dir = Path("text")
-            if text_dir.exists():
-                index_path = text_dir / "index"
-                if not index_path.exists():
-                    documents = SimpleDirectoryReader(str(text_dir)).load_data()
-                    intax = GPTSimpleVectorIndex.from_documents(documents)
-                    intax.save(str(index_path))
-                    st.write("Index created for text directory")
-
-                else:
-                    intax = download_loader(str(index_path))
-                    st.write("Index loaded from file")
+        # Create index from text directory
+        text_dir = Path("text")
+        if text_dir.exists():
+            index_path = text_dir / "index"
+            if not index_path.exists():
+                documents = SimpleDirectoryReader(str(text_dir)).load_data()
+                intax = GPTSimpleVectorIndex.from_documents(documents)
+                intax.save(str(index_path))
+                st.write("Index created for text directory")
 
             else:
-                st.warning("Directory 'text' not found. Please save OCR output text files to 'text' directory.")
+                intax = download_loader(str(index_path))
+                st.write("Index loaded from file")
 
-        except: 
-            st.write("An exception occurred")
+        else:
+            st.warning("Directory 'text' not found. Please save OCR output text files to 'text' directory.")
 
-# Image uploader
-elif ocr_type == "Upload Image":
-    uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
-   
+    except exception as e: 
+        st.write(e)
