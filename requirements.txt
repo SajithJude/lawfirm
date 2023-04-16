@@ -6,3 +6,4 @@ PyPDF2
 streamlit-chat
 openai-whisper
 ffmpeg-python
+streamlit-chat
