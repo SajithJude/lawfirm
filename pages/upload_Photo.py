@@ -71,7 +71,7 @@ if img_file_buffer is not None:
 
     # Create index from text directory
     text_dir = os.path.join(os.getcwd(), "text")
-    st.write(text_dir)
+    # st.write(text_dir)
     # if text_dir.exists():
     index_path = text_dir
     # if not index_path.exists():
@@ -81,7 +81,7 @@ if img_file_buffer is not None:
     st.write(res)
 
     # intax.save(str(index_path))
-    st.write("Index created for text directory")
+    # st.write("Index created for text directory")
 
         # else:
         #     intax = download_loader(str(index_path))
