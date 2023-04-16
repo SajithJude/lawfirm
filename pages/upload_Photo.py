@@ -79,9 +79,9 @@ if img_file_buffer is not None:
             intax.save(str(index_path))
             st.write("Index created for text directory")
 
-        else:
-            intax = download_loader(str(index_path))
-            st.write("Index loaded from file")
+        # else:
+        #     intax = download_loader(str(index_path))
+        #     st.write("Index loaded from file")
 
     else:
         st.warning("Directory 'text' not found. Please save OCR output text files to 'text' directory.")
