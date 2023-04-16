@@ -62,29 +62,29 @@ if img_file_buffer is not None:
     # OCR and save text file
     encoded_image = base64.b64encode(img_file_buffer.read())
     result = callAPI(encoded_image)
-    try:
-        info = result['responses'][0]['textAnnotations'][0]['description']
-        st.image(img_file_buffer)
-        st.caption("Text Recognized")
-        st.write(info)
-        save_text(info)
+    # try:
+    info = result['responses'][0]['textAnnotations'][0]['description']
+    st.image(img_file_buffer)
+    st.caption("Text Recognized")
+    st.write(info)
+    save_text(info)
 
-        # Create index from text directory
-        text_dir = Path("text")
-        if text_dir.exists():
-            index_path = text_dir / "index"
-            if not index_path.exists():
-                documents = SimpleDirectoryReader(str(text_dir)).load_data()
-                intax = GPTSimpleVectorIndex.from_documents(documents)
-                intax.save(str(index_path))
-                st.write("Index created for text directory")
-
-            else:
-                intax = download_loader(str(index_path))
-                st.write("Index loaded from file")
+    # Create index from text directory
+    text_dir = Path("text")
+    if text_dir.exists():
+        index_path = text_dir / "index"
+        if not index_path.exists():
+            documents = SimpleDirectoryReader(str(text_dir)).load_data()
+            intax = GPTSimpleVectorIndex.from_documents(documents)
+            intax.save(str(index_path))
+            st.write("Index created for text directory")
 
         else:
-            st.warning("Directory 'text' not found. Please save OCR output text files to 'text' directory.")
+            intax = download_loader(str(index_path))
+            st.write("Index loaded from file")
 
-    except exception as e: 
-        st.write(e)
+    else:
+        st.warning("Directory 'text' not found. Please save OCR output text files to 'text' directory.")
+
+    # except: 
+    #     st.write(e)
