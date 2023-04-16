@@ -23,7 +23,7 @@ with st.expander("Upload Image"):
     url_input = st.file_uploader("Upload the Photo here")
     # scrape_url = st.button("Analyse photo")
 
-    if scrape_url is not None:
+    if url_input is not None:
         loader = ImageReader(text_type = "key_value")
         documents = loader.load_data(file=url_input)
         st.success(f"Photo uploaded succesfully")
