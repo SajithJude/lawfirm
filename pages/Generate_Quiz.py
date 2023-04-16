@@ -51,7 +51,7 @@ if result:
 # except AttributeError:
 
 try:
-    st.subheader("Refining section by subject matter expert")
+    st.subheader("Refining section ")
         # Display the JSON output as editable text_input fields
     for i, item in enumerate(st.session_state.json_output):
         st.write(f"question {i+1}")
