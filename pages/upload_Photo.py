@@ -71,13 +71,14 @@ if img_file_buffer is not None:
 
     # Create index from text directory
     text_dir = Path("text")
-    if text_dir.exists():
-        index_path = text_dir
-        if not index_path.exists():
-            documents = SimpleDirectoryReader(str(text_dir)).load_data()
-            intax = GPTSimpleVectorIndex.from_documents(documents)
-            intax.save(str(index_path))
-            st.write("Index created for text directory")
+    st.write(text_dir)
+    # if text_dir.exists():
+    index_path = text_dir
+    if not index_path.exists():
+        documents = SimpleDirectoryReader(str(text_dir)).load_data()
+        intax = GPTSimpleVectorIndex.from_documents(documents)
+        intax.save(str(index_path))
+        st.write("Index created for text directory")
 
         # else:
         #     intax = download_loader(str(index_path))
