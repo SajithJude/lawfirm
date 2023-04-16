@@ -77,7 +77,7 @@ if img_file_buffer is not None:
     # if not index_path.exists():
     documents = SimpleDirectoryReader(str(text_dir)).load_data()
     intax = GPTSimpleVectorIndex.from_documents(documents)
-    res= intax.query("Generate 10 Questions with answers from this documents")
+    res= intax.query("Generate 5 Questions with answers from this documents")
     st.write(res)
     for file in os.listdir(text_dir):
         file_path = os.path.join(text_dir, file)
