@@ -1,63 +1,63 @@
 import streamlit as st
-import base64
-import requests
-import json
+from pathlib import Path
+from llama_index import download_loader, GPTSimpleVectorIndex, SimpleDirectoryReader
 import os
 
+st.set_option('deprecation.showfileUploaderEncoding', False)
 
-st.title('Optical Character Recognition')
-cam = st.radio('Please select an option',('Open Webcam', 'Upload Image'))
-# upload = st.checkbox('Upload an Image')
+# Title
+st.title("WhatsApp Chat Analyzer")
 
-def callAPI(image):
-    vision_url = 'https://vision.googleapis.com/v1/images:annotate?key='
+# File uploader
+uploaded_file = st.file_uploader("Upload your WhatsApp chat .txt file", type="txt")
 
-    # Your Google Cloud Platform (GCP) API KEY. Generate one on cloud.google.com
-    api_key = os.environ["GCP_KEY"] 
-    # Load your image as a base64 encoded string
+if uploaded_file is not None:
+    # Check if "whatsapp" directory exists, and create it if it doesn't
+    data_dir = Path("whatsapp")
+    if not data_dir.exists():
+        data_dir.mkdir()
 
-    # Generate a post request for GCP vision Annotation
-    json_data= {
-        'requests': [
-            {
-                'image':{
-                    'content': image.decode('utf-8')
-                },
-                'features':[
-                    {
-                        'type':'TEXT_DETECTION',
-                        'maxResults':5
-                    }
-                ]
-            }
-        ]
-    }
+    # Save the uploaded file to the "whatsapp" directory
+    data_path = data_dir / uploaded_file.name
+    with open(data_path, "wb") as f:
+        f.write(uploaded_file.getvalue())
 
-    # Handle the API request
-    responses = requests.post(vision_url+api_key, json=json_data)
+    # Load and process the data
+    documents = SimpleDirectoryReader(str(data_dir)).load_data()
 
-    # Read the response in json format
+    # Create an index from the text directory
+    text_dir = Path("text")
+    if text_dir.exists():
+        index_path = text_dir / "index"
+        if not index_path.exists():
+            intax = GPTSimpleVectorIndex.from_documents(documents)
+            intax.save(str(index_path))
+            st.write("Index created for text directory")
 
-    return responses.json()
+        else:
+            intax = download_loader(str(index_path))
+            st.write("Index loaded from file")
 
+    else:
+        st.warning("Directory 'text' not found. Please save OCR output text files to 'text' directory.")
 
-if cam =='Open Webcam':
-    img_file_buffer = st.camera_input("Take a picture")
-    if img_file_buffer is not None:
-        encoded_image = base64.b64encode(img_file_buffer.read())
-        result = callAPI(encoded_image)
-        try:
-            info = result['responses'][0]['textAnnotations'][0]['description']
-            st.image(img_file_buffer)
-            st.caption("Text Recognized")
-            st.write(info)
+else:
+    st.warning("Please upload a .txt file to analyze WhatsApp chats.")
 
-            # write output to a file
-            os.makedirs('text', exist_ok=True)  # create directory if it doesn't exist
-            with open('text/output.txt', 'w') as f:
-                f.write(info)
-                st.write('Output written to file: text/output.txt')
+inp = st.text_input("Input a query")
+send = st.button("Submit")
+clear = st.button("Clear session state")
 
-        except:
-            st.write("An exception occurred")
+if send:
+    if "intax" not in st.session_state:
+        st.error("Index not found. Please upload a text file and create an index first.")
+    else:
+        resp = st.session_state.intax.query(inp)
+        st.write(resp.response)
 
+if clear:
+    if "intax" in st.session_state:
+        del st.session_state.intax
+        st.success("Session state cleared.")
+    else:
+        st.warning("Session state already empty.")
