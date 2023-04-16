@@ -50,7 +50,7 @@ def save_text(text):
     file_path = os.path.join("text", file_name)
     with open(file_path, 'w') as f:
         f.write(text)
-        st.write('Text saved to file:', file_path)
+        # st.write('Text saved to file:', file_path)
 
 # Photo taker
 img_file_buffer = st.camera_input("Take a picture")
