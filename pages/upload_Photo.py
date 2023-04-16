@@ -3,9 +3,7 @@ import base64
 import requests
 import json
 import os
-# from PIL import Image
-# from PIL import ImageFont
-# from PIL import ImageDraw
+
 
 st.title('Optical Character Recognition')
 cam = st.radio('Please select an option',('Open Webcam', 'Upload Image'))
@@ -54,27 +52,12 @@ if cam =='Open Webcam':
             st.caption("Text Recognized")
             st.write(info)
 
+            # write output to a file
+            os.makedirs('text', exist_ok=True)  # create directory if it doesn't exist
+            with open('text/output.txt', 'w') as f:
+                f.write(info)
+                st.write('Output written to file: text/output.txt')
 
-
-        except: 
+        except:
             st.write("An exception occurred")
-            # st.write("##API response Body")
-            # st.write(result) 
-        
 
-else:
-    img = st.file_uploader("Click to Upload an Image")
-    if img is not None:
-        encoded_image = base64.b64encode(img.read())
-        result = callAPI(encoded_image)
-        try:
-            info = result['responses'][0]['textAnnotations'][0]['description']
-            st.image(img)
-            st.caption("Text Recognized")
-            st.write(info)
-
-        except: 
-            st.write("An exception occurred")
-            # st.text("##API response Body")
-            # st.write(result)
-        
