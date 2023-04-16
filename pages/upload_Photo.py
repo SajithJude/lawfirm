@@ -79,6 +79,15 @@ if img_file_buffer is not None:
     intax = GPTSimpleVectorIndex.from_documents(documents)
     res= intax.query("Generate 10 Questions from this documents")
     st.write(res)
+    for file in os.listdir(text_dir):
+        file_path = os.path.join(text_dir, file)
+        try:
+            if os.path.isfile(file_path):
+                os.unlink(file_path)
+            st.info("cache cleared")
+        except Exception as e:
+            print(e)
+st.write("Text directory cleared")
 
     # intax.save(str(index_path))
     # st.write("Index created for text directory")
