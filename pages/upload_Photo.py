@@ -1,63 +1,99 @@
 import streamlit as st
+import base64
+import requests
+import json
+import os
 from pathlib import Path
 from llama_index import download_loader, GPTSimpleVectorIndex, SimpleDirectoryReader
-import os
 
 st.set_option('deprecation.showfileUploaderEncoding', False)
 
 # Title
-st.title("WhatsApp Chat Analyzer")
+st.title("OCR and Search")
 
-# File uploader
-uploaded_file = st.file_uploader("Upload your WhatsApp chat .txt file", type="txt")
+# OCR radio buttons
+ocr_type = st.radio("Select OCR type", ("Upload Image", "Take a Picture"))
 
-if uploaded_file is not None:
-    # Check if "whatsapp" directory exists, and create it if it doesn't
-    data_dir = Path("whatsapp")
-    if not data_dir.exists():
-        data_dir.mkdir()
+# OCR function
+def callAPI(image):
+    vision_url = 'https://vision.googleapis.com/v1/images:annotate?key='
 
-    # Save the uploaded file to the "whatsapp" directory
-    data_path = data_dir / uploaded_file.name
-    with open(data_path, "wb") as f:
-        f.write(uploaded_file.getvalue())
+    # Your Google Cloud Platform (GCP) API KEY. Generate one on cloud.google.com
+    api_key = os.environ["GCP_KEY"] 
+    # Load your image as a base64 encoded string
 
-    # Load and process the data
-    documents = SimpleDirectoryReader(str(data_dir)).load_data()
+    # Generate a post request for GCP vision Annotation
+    json_data= {
+        'requests': [
+            {
+                'image':{
+                    'content': image.decode('utf-8')
+                },
+                'features':[
+                    {
+                        'type':'TEXT_DETECTION',
+                        'maxResults':5
+                    }
+                ]
+            }
+        ]
+    }
 
-    # Create an index from the text directory
-    text_dir = Path("text")
-    if text_dir.exists():
-        index_path = text_dir / "index"
-        if not index_path.exists():
-            intax = GPTSimpleVectorIndex.from_documents(documents)
-            intax.save(str(index_path))
-            st.write("Index created for text directory")
+    # Handle the API request
+    responses = requests.post(vision_url+api_key, json=json_data)
 
-        else:
-            intax = download_loader(str(index_path))
-            st.write("Index loaded from file")
+    # Read the response in json format
 
-    else:
-        st.warning("Directory 'text' not found. Please save OCR output text files to 'text' directory.")
+    return responses.json()
 
-else:
-    st.warning("Please upload a .txt file to analyze WhatsApp chats.")
+# Text saver function
+def save_text(text):
+    os.makedirs('text', exist_ok=True)  # create directory if it doesn't exist
+    file_name = f"{st.session_state.photo_name.split('.')[0]}.txt"
+    file_path = os.path.join("text", file_name)
+    with open(file_path, 'w') as f:
+        f.write(text)
+        st.write('Text saved to file:', file_path)
 
-inp = st.text_input("Input a query")
-send = st.button("Submit")
-clear = st.button("Clear session state")
+# Photo taker
+if ocr_type == "Take a Picture":
+    img_file_buffer = st.camera_input("Take a picture")
+    if img_file_buffer is not None:
+        # Get the photo name to save the text file with the same name
+        st.session_state.photo_name = f"photo_{st.session_state.get('photo_counter', 0)}.jpg"
+        st.session_state.photo_counter = st.session_state.get("photo_counter", 0) + 1
 
-if send:
-    if "intax" not in st.session_state:
-        st.error("Index not found. Please upload a text file and create an index first.")
-    else:
-        resp = st.session_state.intax.query(inp)
-        st.write(resp.response)
+        # OCR and save text file
+        encoded_image = base64.b64encode(img_file_buffer.read())
+        result = callAPI(encoded_image)
+        try:
+            info = result['responses'][0]['textAnnotations'][0]['description']
+            st.image(img_file_buffer)
+            st.caption("Text Recognized")
+            st.write(info)
+            save_text(info)
 
-if clear:
-    if "intax" in st.session_state:
-        del st.session_state.intax
-        st.success("Session state cleared.")
-    else:
-        st.warning("Session state already empty.")
+            # Create index from text directory
+            text_dir = Path("text")
+            if text_dir.exists():
+                index_path = text_dir / "index"
+                if not index_path.exists():
+                    documents = SimpleDirectoryReader(str(text_dir)).load_data()
+                    intax = GPTSimpleVectorIndex.from_documents(documents)
+                    intax.save(str(index_path))
+                    st.write("Index created for text directory")
+
+                else:
+                    intax = download_loader(str(index_path))
+                    st.write("Index loaded from file")
+
+            else:
+                st.warning("Directory 'text' not found. Please save OCR output text files to 'text' directory.")
+
+        except: 
+            st.write("An exception occurred")
+
+# Image uploader
+elif ocr_type == "Upload Image":
+    uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+   
