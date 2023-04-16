@@ -3,11 +3,11 @@ from streamlit_chat import message
 import json
 
 streamlit.set_page_config(
-    page_title="DocuBOT QuizMode",
+    page_title="Uploaded QuizMode",
     page_icon=":robot:"
 )
 
-streamlit.header("DocuBOT QuizMode")
+streamlit.header(" Uploaded QuizMode")
 
 uploaded_file = streamlit.file_uploader("Upload the Json Config file here")
 
