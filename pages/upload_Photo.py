@@ -1,53 +1,80 @@
 import streamlit as st
-from pathlib import Path
-import llama_index
-from langchain import OpenAI
-from llama_index import download_loader, GPTSimpleVectorIndex, Document,  LLMPredictor, ServiceContext
+import base64
+import requests
+import json
 import os
+# from PIL import Image
+# from PIL import ImageFont
+# from PIL import ImageDraw
 
-# AudioTranscriber = download_loader("AudioTranscriber")
-ImageReader = download_loader("ImageReader")
+st.title('Optical Character Recognition')
+cam = st.radio('Please select an option',('Open Webcam', 'Upload Image'))
+# upload = st.checkbox('Upload an Image')
 
-web_dir = Path("image")
-web_dir.mkdir(exist_ok=True)
+def callAPI(image):
+    vision_url = 'https://vision.googleapis.com/v1/images:annotate?key='
 
-if "scrapeIndex" not in st.session_state:
-    st.session_state.scrapeIndex = ""
-# Create directory if it doesn't exist
-# Streamlit app code
-st.title("Generate questions from Image")
-# st.caption("This app allows users to input a URL from the internet and scrape content from it. The app uses web scraping techniques to extract relevant information from the webpage and can identify and retrieve data such as article titles, text content, and images. Users can then ask custom questions related to the scraped content, and the app will provide them with the answers. The app can also provide users with additional information related to the content, such as the author's name, publication date, or any relevant keywords. The app is designed to make it easy for users to gather information from the internet and quickly find the answers they need.")
-with st.expander("Upload Image"):
+    # Your Google Cloud Platform (GCP) API KEY. Generate one on cloud.google.com
+    api_key = os.environ["GCP_KEY"] 
+    # Load your image as a base64 encoded string
 
-# Input field for the URL to be loaded in the data
-    url_input = st.file_uploader("Upload the Photo here")
-    # scrape_url = st.button("Analyse photo")
+    # Generate a post request for GCP vision Annotation
+    json_data= {
+        'requests': [
+            {
+                'image':{
+                    'content': image.decode('utf-8')
+                },
+                'features':[
+                    {
+                        'type':'TEXT_DETECTION',
+                        'maxResults':5
+                    }
+                ]
+            }
+        ]
+    }
 
-    if url_input is not None:
-        loader = ImageReader(text_type = "key_value")
-        documents = loader.load_data(file=url_input)
-        st.success(f"Photo uploaded succesfully")
-        llm_predictor = LLMPredictor(llm=OpenAI(temperature=0, model_name="text-davinci-003", max_tokens=1024))
-        service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
+    # Handle the API request
+    responses = requests.post(vision_url+api_key, json=json_data)
 
+    # Read the response in json format
 
-        photoindex = GPTSimpleVectorIndex.from_documents(documents, service_context=service_context)
-        st.session_state.photoindex = photoindex
-        # name = web_dir / url_input
-        # index.save_to_disk(f"url.json")
- 
-    # b ir / selected_index_file
-
-# index = GPTSimpleVectorIndex.load_from_disk(f"url.json", service_context=service_context)
-# if index:
-#     st.success("Index Loaded from repository successfully")
-
-inp = st.text_input("Ask question")
-ask = st.button("Submit")
-
-if ask:
-    res = st.session_state.photoindex.query(inp)
-    st.write(res)
-    pass
+    return responses.json()
 
 
+if cam =='Open Webcam':
+    img_file_buffer = st.camera_input("Take a picture")
+    if img_file_buffer is not None:
+        encoded_image = base64.b64encode(img_file_buffer.read())
+        result = callAPI(encoded_image)
+        try:
+            info = result['responses'][0]['textAnnotations'][0]['description']
+            st.image(img_file_buffer)
+            st.caption("Text Recognized")
+            st.write(info)
+
+
+
+        except: 
+            st.write("An exception occurred")
+            # st.write("##API response Body")
+            # st.write(result) 
+        
+
+else:
+    img = st.file_uploader("Click to Upload an Image")
+    if img is not None:
+        encoded_image = base64.b64encode(img.read())
+        result = callAPI(encoded_image)
+        try:
+            info = result['responses'][0]['textAnnotations'][0]['description']
+            st.image(img)
+            st.caption("Text Recognized")
+            st.write(info)
+
+        except: 
+            st.write("An exception occurred")
+            # st.text("##API response Body")
+            # st.write(result)
+        
