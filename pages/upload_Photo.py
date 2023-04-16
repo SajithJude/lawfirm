@@ -77,7 +77,10 @@ if img_file_buffer is not None:
     # if not index_path.exists():
     documents = SimpleDirectoryReader(str(text_dir)).load_data()
     intax = GPTSimpleVectorIndex.from_documents(documents)
-    intax.save(str(index_path))
+    res= intax.query("Generate 10 Questions from this documents")
+    st.write(res)
+
+    # intax.save(str(index_path))
     st.write("Index created for text directory")
 
         # else:
