@@ -72,7 +72,7 @@ with st.sidebar.expander("Settings ", expanded=False):
     #     # if index_path is not None:
 
 # Set up the Streamlit app layout
-st.title("DocuBot QuizMode")
+st.title("Chat With Quiz")
 # st.subheader(" Powered by 🦜 LangChain + OpenAI + Streamlit")
 
 # Ask the user to enter their OpenAI API key
